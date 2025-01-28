@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('tujuan_keberangkatan', 100);
             $table->date('tanggal_keberangkatan');
             $table->date('tanggal_kedatangan');
-            $table->double('harga');
+            $table->double('harga')->min(1000);
             $table->foreignId('id_kereta')->constrained('kereta');
             $table->timestamps();
         });

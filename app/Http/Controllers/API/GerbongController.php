@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Services\GerbongService;
+use Illuminate\Support\Facades\Gate;
 
 class GerbongController extends Controller
 {
@@ -26,6 +27,7 @@ class GerbongController extends Controller
 
     public function createGerbong(Request $request)
     {
+        Gate::authorize('admin', $request->user());
         $result = $this->gerbongService->createGerbong($request);
         if ($result) {
             return response()->json([
@@ -43,6 +45,7 @@ class GerbongController extends Controller
 
     public function updateGerbong(Request $request, $id)
     {
+        Gate::authorize('admin', $request->user());
         $result = $this->gerbongService->updateGerbong($request, $id);
         if ($result) {
             return response()->json([
@@ -58,8 +61,9 @@ class GerbongController extends Controller
         }
     }
 
-    public function deleteGerbong($id)
+    public function deleteGerbong(Request $request, $id)
     {
+        Gate::authorize('admin', $request->user());
         $result = $this->gerbongService->deleteGerbong($id);
         if ($result) {
             return response()->json([

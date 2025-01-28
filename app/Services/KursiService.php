@@ -25,6 +25,13 @@ class KursiService
   public function createKursi($fields)
   {
     $fields = $this->validateKursiRequest($fields);
+    $isNumberAvailable = Kursi::where('no_kursi', $fields['no_kursi'])->where('id_gerbong', $fields['id_gerbong'])->first();
+    if ($isNumberAvailable) {
+      return (object) [
+        'success' => false,
+        'message' => 'Kursi number already exists.'
+      ];
+    }
     return Kursi::create($fields);
   }
 

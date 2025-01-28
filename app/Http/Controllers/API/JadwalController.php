@@ -4,76 +4,78 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Services\KeretaService;
+use App\Services\JadwalService;
 use Illuminate\Support\Facades\Gate;
 
-class KeretaController extends Controller
+class JadwalController extends Controller
 {
-    protected $keretaService;
-    public function __construct(KeretaService $keretaService)
+    protected $jadwalService;
+    public function __construct(JadwalService $jadwalService)
     {
-        $this->keretaService = $keretaService;
+        $this->jadwalService = $jadwalService;
     }
 
-    public function getKereta($id = null)
+    public function getJadwals(Request $request)
     {
-        if ($id) {
-            $kereta = $this->keretaService->getKereta($id);
-            return response()->json($kereta, 200);
-        }
-        $kereta = $this->keretaService->getKereta();
+        $kereta = $this->jadwalService->getJadwals($request->search ?? null, $request->date ?? null);
         return response()->json($kereta, 200);
     }
 
-    public function createKereta(Request $request)
+    public function findJadwal($id)
+    {
+        $kereta = $this->jadwalService->findJadwalById($id);
+        return response()->json($kereta, 200);
+    }
+
+    public function createJadwal(Request $request)
     {
         Gate::authorize('admin', $request->user());
-        $result = $this->keretaService->createKereta($request);
+        $result = $this->jadwalService->createJadwal($request);
         if ($result) {
             return response()->json([
                 'success' => true,
-                'message' => 'Kereta created.',
+                'message' => 'Jadwal created.',
                 'data' => $result
             ], 201);
         } else {
             return response()->json([
                 'success' => false,
-                'message' => 'Kereta creation failed.'
+                'message' => 'Jadwal creation failed.'
             ], 500);
         }
     }
 
-    public function updateKereta(Request $request, $id)
+    public function updateJadwal(Request $request, $id)
     {
         Gate::authorize('admin', $request->user());
-        $result = $this->keretaService->updateKereta($request, $id);
+        $result = $this->jadwalService->updateJadwal($request, $id);
         if ($result) {
             return response()->json([
                 'success' => true,
-                'message' => 'Kereta updated.',
+                'message' => 'Jadwal updated.',
                 'data' => $result
             ], 200);
         } else {
             return response()->json([
                 'success' => false,
-                'message' => 'Kereta update failed.'
+                'message' => 'Jadwal update failed.'
             ], 500);
         }
     }
 
-    public function deleteKereta(Request $request, $id)
+    public function deleteJadwal(Request $request, $id)
     {
         Gate::authorize('admin', $request->user());
-        $result = $this->keretaService->deleteKereta($id);
+        $result = $this->jadwalService->deleteJadwal($id);
         if ($result) {
             return response()->json([
                 'success' => true,
-                'message' => 'Kereta deleted.'
+                'message' => 'Jadwal deleted.'
             ], 200);
         } else {
             return response()->json([
                 'success' => false,
-                'message' => 'Kereta deletion failed.'
+                'message' => 'Jadwal deletion failed.'
             ], 500);
         }
     }

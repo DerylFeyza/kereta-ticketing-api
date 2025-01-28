@@ -17,7 +17,6 @@ class UserService
       'email' => 'required|string|email|unique:users,email',
       'password' => 'required|string|min:8',
       'remember_token' => 'nullable|string|max:100',
-      // 'role' => 'required|in:pelanggan,petugas',
     ]);
   }
 
