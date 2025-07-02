@@ -8,6 +8,7 @@
     <title>{{ $title ?? 'App' }}</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <header class="flex items-center justify-between bg-blue-600 text-white px-6 py-4 lg:hidden">
@@ -77,7 +78,7 @@
 
                 <!-- User Menu -->
                 <li>
-                    <a
+                    <a href="{{ route('admin.dashboard.pelanggan.index') }}"
                         class="flex items-center px-4 py-3 text-gray-700 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200 group {{ request()->routeIs('users.*') ? 'bg-blue-50 text-blue-600 border-r-4 border-blue-600' : '' }}">
                         <svg class="w-5 h-5 mr-3 text-gray-400 group-hover:text-blue-500 {{ request()->routeIs('users.*') ? 'text-blue-500' : '' }}"
                             fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -139,6 +140,8 @@
             </div>
         </div>
     </div>
+    {{ $slot }}
+
     <script>
         function sidebarState() {
             return {
