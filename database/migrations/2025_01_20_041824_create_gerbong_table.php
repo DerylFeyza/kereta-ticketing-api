@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nama_gerbong', 100);
             $table->integer('kuota');
-            $table->foreignId('id_kereta')->constrained('kereta');
+            $table->foreignId('id_kereta')->constrained('kereta')->onDelete('cascade');
             $table->timestamps();
         });
     }

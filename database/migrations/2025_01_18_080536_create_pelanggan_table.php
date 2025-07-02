@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('nama_penumpang', 100);
             $table->text('alamat');
             $table->string('telp', 20);
-            $table->foreignId('id_user')->constrained('users');
+            $table->foreignId('id_user')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

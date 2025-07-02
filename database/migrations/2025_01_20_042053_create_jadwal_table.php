@@ -18,7 +18,7 @@ return new class extends Migration
             $table->date('tanggal_keberangkatan');
             $table->date('tanggal_kedatangan');
             $table->double('harga')->min(1000);
-            $table->foreignId('id_kereta')->constrained('kereta');
+            $table->foreignId('id_kereta')->constrained('kereta')->onDelete('cascade');
             $table->timestamps();
         });
     }

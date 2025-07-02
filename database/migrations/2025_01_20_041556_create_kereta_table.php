@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nama_kereta', 100);
             $table->text('deskripsi');
             $table->text('kelas');
-            $table->timestamps();   
+            $table->timestamps();
         });
     }
 

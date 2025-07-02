@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('kursi', function (Blueprint $table) {
             $table->id();
             $table->integer('no_kursi');
-            $table->foreignId('id_gerbong')->constrained('gerbong');
+            $table->foreignId('id_gerbong')->constrained('gerbong')->onDelete('cascade');
             $table->timestamps();
         });
     }

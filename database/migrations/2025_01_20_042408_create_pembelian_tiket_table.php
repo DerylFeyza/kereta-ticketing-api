@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('pembelian_tiket', function (Blueprint $table) {
             $table->id();
             $table->date('tanggal_pembelian');
-            $table->foreignId('id_pelanggan')->constrained('pelanggan');
-            $table->foreignId('id_jadwal')->constrained('jadwal');
-            $table->foreignId('id_kursi')->constrained('kursi');
+            $table->foreignId('id_pelanggan')->constrained('pelanggan')->onDelete('cascade');
+            $table->foreignId('id_jadwal')->constrained('jadwal')->onDelete('cascade');
+            $table->foreignId('id_kursi')->constrained('kursi')->onDelete('cascade');
             $table->timestamps();
         });
     }
