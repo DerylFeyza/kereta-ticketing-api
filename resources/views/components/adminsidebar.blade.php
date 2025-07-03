@@ -95,7 +95,7 @@
 
                 <!-- Petugas Menu -->
                 <li>
-                    <a
+                    <a href="{{ route('admin.dashboard.petugas.index') }}"
                         class="flex items-center px-4 py-3 text-gray-700 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200 group {{ request()->routeIs('petugas.*') ? 'bg-blue-50 text-blue-600 border-r-4 border-blue-600' : '' }}">
                         <svg class="w-5 h-5 mr-3 text-gray-400 group-hover:text-blue-500 {{ request()->routeIs('petugas.*') ? 'text-blue-500' : '' }}"
                             fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -1,11 +1,34 @@
 <x-adminsidebar>
-    <!-- Main content area -->
     <div class="lg:ml-64 min-h-screen bg-gray-50">
         <main class="space-y-6 p-6">
-            <x-user-count title="Total Pelanggan" :num="count($pelanggan) ?? 0"></x-user-count>
+            <x-user-count title="Total Petugas" :num="count($petugas) ?? 0"></x-user-count>
+
+            <!-- Filters and Search -->
             <div class="bg-white shadow rounded-lg p-6">
                 <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0">
-                    <x-search />
+                    <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
+                        <!-- Search -->
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                </svg>
+                            </div>
+                            <input type="text" id="searchInput" onkeyup="submitSearch()"
+                                value="{{ request()->input('search') ?? '' }}"
+                                class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                placeholder="Search users...">
+                        </div>
+                        <button
+                            class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                            onclick="submitSearch()">Search</button>
+
+                        <!-- Role Filter -->
+
+                    </div>
+
                     <div class="flex space-x-3">
                         <button
                             class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
@@ -67,7 +90,7 @@
                                 </th>
                             </tr>
                         </thead>
-                        <tbody class="bg-white divide-y divide-gray-200">
+                        {{-- <tbody class="bg-white divide-y divide-gray-200">
                             <!-- Sample Row 1 - Based on your data -->
                             @foreach ($pelanggan as $item)
                                 <tr class="hover:bg-gray-50" data-user-id="{{ $item->id_user }}">
@@ -149,11 +172,11 @@
 
 
 
-                        </tbody>
+                        </tbody> --}}
                     </table>
                 </div>
 
-                <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+                {{-- <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
                     <div class="flex-1 flex justify-between sm:hidden">
                         <a href="#"
                             class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
@@ -237,64 +260,12 @@
                         </div>
 
                     </div>
-                </div>
+                </div> --}}
             </div>
     </div>
-
-
     </div>
-
     <script>
-        function confirmDelete(id) {
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "This action cannot be undone!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#e3342f',
-                cancelButtonColor: '#6c757d',
-                confirmButtonText: 'Yes, delete it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    deleteUser(id);
-                }
-            });
-        }
-
-        function deleteUser(id) {
-            fetch(`/admin/dashboard/pelanggan/${id}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                        'Accept': 'application/json'
-                    }
-                })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.success) {
-                        const row = document.querySelector(`[data-user-id="${id}"]`);
-                        if (row) {
-                            row.remove();
-                        }
-                        updatePelangganCount();
-
-                        Swal.fire('Deleted!', data.message, 'success');
-                    }
-                })
-                .catch(error => {
-                    console.error(error);
-                    Swal.fire('Error!', 'Failed to delete the user.', 'error');
-                });
-        }
-
-
-        function updatePelangganCount() {
-            const currentCount = document.querySelectorAll('[data-user-id]').length;
-            const countElement = document.querySelector('.pelanggan-count');
-
-            if (countElement) {
-                countElement.textContent = currentCount;
-            }
-        }
+        const pelanggan = @json($petugas);
+        console.log(pelanggan);
     </script>
 </x-adminsidebar>
