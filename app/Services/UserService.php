@@ -76,6 +76,33 @@ class UserService
     return $combinedData;
   }
 
+  public function updatePelanggan($fields, $id)
+  {
+
+    $pelanggan = Pelanggan::find($id);
+
+
+    if ($pelanggan) {
+      $pelangganFields = $fields->validate([
+        'NIK' => 'required|string|max:100|unique:pelanggan,NIK,' . $id,
+        'alamat' => 'required|string',
+        'telp' => 'required|string|max:20',
+      ]);
+      $user = User::find($pelanggan->id_user);
+      $userFields = $fields->validate([
+        'name' => 'required|string',
+        'username' => 'required|string|unique:users,username,' . $pelanggan->id_user,
+        'email' => 'required|string|email|unique:users,email,' . $pelanggan->id_user,
+        'remember_token' => 'nullable|string|max:100',
+      ]);
+      $pelanggan->update($pelangganFields);
+      $user->update($userFields);
+
+      return $pelanggan;
+    }
+    return null;
+  }
+
   public function updateUser(Request $fields, $id)
   {
     $user = User::find($id);
